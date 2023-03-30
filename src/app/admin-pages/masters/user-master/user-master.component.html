@@ -1,0 +1,150 @@
+<section>
+    <ngx-spinner></ngx-spinner>
+    <mat-card class="m-3">
+        <h3 class="bg-success text-white text-center p-2">USER LIST</h3>
+    </mat-card>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-card class="m-3">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <mat-form-field class="example-full-width " appearance="outline" [formGroup]="userForm">
+                    <mat-label class="">First Name</mat-label>
+                    <input matInput placeholder="Enter First Name" formControlName="userFName"
+                        [(ngModel)]=" userModel.userFName"
+                        [ngClass]="{ 'is-invalid': submitted && f.userFName.errors }">
+                    <div *ngIf="submitted && f.userFName.errors" class="invalid-feedback">
+                        <div class="text-danger" *ngIf="f.userFName.errors.required">First Name is required
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <mat-form-field class="example-full-width " appearance="outline" [formGroup]="userForm">
+                    <mat-label class="">Last Name</mat-label>
+                    <input matInput placeholder="Enter Last Name" formControlName="userLName"
+                        [(ngModel)]=" userModel.userLName"
+                        [ngClass]="{ 'is-invalid': submitted && f.userLName.errors }">
+                    <div *ngIf="submitted && f.userLName.errors" class="invalid-feedback">
+                        <div class="text-danger" *ngIf="f.userLName.errors.required">Last Name is required
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <mat-form-field class="example-full-width " appearance="outline" [formGroup]="userForm">
+                    <mat-label class="">Mobile Number</mat-label>
+                    <input matInput placeholder="Enter Mobile Number" formControlName="userMobileNo"
+                        [(ngModel)]=" userModel.userMobileNo"
+                        [ngClass]="{ 'is-invalid': submitted && f.userMobileNo.errors }">
+                    <div *ngIf="submitted && f.userMobileNo.errors" class="invalid-feedback">
+                        <div class="text-danger" *ngIf="f.userMobileNo.errors.required">Mobile Number is required
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <mat-form-field class="example-full-width " appearance="outline" [formGroup]="userForm">
+                    <mat-label class="">Reference Mobile Number</mat-label>
+                    <input matInput placeholder="Enter Reference Mobile Number" formControlName="userReferenceMobileNo"
+                        [(ngModel)]=" userModel.userReferenceMobileNo"
+                        [ngClass]="{ 'is-invalid': submitted && f.userReferenceMobileNo.errors }">
+                    <div *ngIf="submitted && f.userReferenceMobileNo.errors" class="invalid-feedback">
+                        <div class="text-danger" *ngIf="f.userReferenceMobileNo.errors.required">Reference Mobile Number is required
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div> -->
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <mat-form-field appearance="outline" [formGroup]="userForm">
+                    <mat-label>Select Status</mat-label>
+                    <mat-select required formControlName="userStatus" [(ngModel)]=" userModel.userStatus"
+                        [ngClass]="{ 'is-invalid': submitted && f.userStatus.errors }">
+                        <mat-option>Select Status</mat-option>
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                    </mat-select>
+                    <div *ngIf="submitted && f.userStatus.errors" class="invalid-feedback">
+                        <div class="text-danger" *ngIf="f.userStatus.errors.required">Status is required
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-center m-4">
+            <button class="btn btn-success">Submit</button>
+        </div>
+    </mat-card>
+</form>
+
+    <mat-card class="m-3">
+        <h4 class="bg-success text-white text-center p-1">HISTORY</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search here" #input>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="table-responsive" #epltable>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="Sr.No.">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr.No. </th>
+                    <td mat-cell *matCellDef="let element; index as i;"> {{paginator.pageSize * paginator.pageIndex + i
+                        + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FName">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell *matCellDef="let element">{{element.userFName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="LName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.userLName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Mobile">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
+                    <td mat-cell *matCellDef="let element"> {{element.userMobileNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.userStatus}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td mat-cell *matCellDef="let element"> <button type="button" class="btn btn-dark"
+                            title="Edit Category Master" (click)="getUserById(element.userId)">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div class="row" *ngIf="errormsgDiv">
+                <div class="col-md-12 text-center">
+                    <p>Record not found</p>
+                </div>
+            </div>
+
+            <br>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons class="stylespagination">
+            </mat-paginator>
+        </div>
+
+    </mat-card>
+</section>

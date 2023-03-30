@@ -1,0 +1,35 @@
+<div class="container-fluid mt-4">
+
+    <section id="count-section">
+        <div class="row">
+            <div class="offset-lg-2 col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center">
+                <mat-card>
+                    <h3>Active Vendor Count</h3>
+                    <h1 *ngIf="getActiveVendorCount">
+                        {{getActiveVendorCount}}
+                    </h1>
+                    <h1 *ngIf="!getActiveVendorCount || getActiveVendorCount == 0">
+                        0
+                    </h1>
+                </mat-card>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center">
+                <mat-card>
+                    <h3>Active User Count</h3>
+                    <h1 *ngIf="getActiveUserCount">
+                        {{getActiveUserCount}}
+                    </h1>
+                    <h1 *ngIf="!getActiveUserCount || getActiveUserCount == 0">
+                        0
+                    </h1>
+                </mat-card>
+            </div>
+            <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <mat-card>
+                    c
+                </mat-card>
+            </div> -->
+        </div>
+    </section>
+
+</div>

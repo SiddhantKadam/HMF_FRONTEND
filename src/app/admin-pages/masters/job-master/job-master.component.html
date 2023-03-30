@@ -1,0 +1,161 @@
+<section>
+    <ngx-spinner></ngx-spinner>
+    <mat-card class="m-3">
+        <h3 class="bg-success text-white text-center p-2">JOB MASTER</h3>
+    </mat-card>
+
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+        <mat-card class="m-3">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="jobForm">
+                        <mat-label class="">Vendor Name</mat-label>
+                        <mat-select required formControlName="vendorId" [(ngModel)]=" jobModel.vendorId"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorId.errors }">
+                            <mat-option>Select State</mat-option>
+                            <mat-option *ngFor="let vendor of activeVendorList" [value]="vendor.vendorId">
+                                {{vendor.vendorBusinessName}}
+                            </mat-option>
+                        </mat-select>
+                        <div *ngIf="submitted && f.vendorId.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorId.errors.required">Status is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="jobForm">
+                        <mat-label class="">Job Name</mat-label>
+                        <input matInput placeholder="Enter Job Name" formControlName="jobName"
+                            [(ngModel)]=" jobModel.jobName" [ngClass]="{ 'is-invalid': submitted && f.jobName.errors }">
+                        <div *ngIf="submitted && f.jobName.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.jobName.errors.required">Job Name is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="jobForm">
+                        <mat-label class="">Number of positions</mat-label>
+                        <input matInput placeholder="Enter Number of positions" formControlName="noOfPositions"
+                            [(ngModel)]=" jobModel.noOfPositions"
+                            [ngClass]="{ 'is-invalid': submitted && f.noOfPositions.errors }">
+                        <div *ngIf="submitted && f.noOfPositions.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.noOfPositions.errors.required">Number of positions is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="jobForm">
+                        <mat-label class=""> Job Description</mat-label>
+                        <textarea matInput placeholder="Enter Job Description" formControlName="jobDescription"
+                            [(ngModel)]=" jobModel.jobDescription"
+                            [ngClass]="{ 'is-invalid': submitted && f.jobDescription.errors }"></textarea>
+                        <div *ngIf="submitted && f.jobDescription.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.jobDescription.errors.required">Job Description
+                                is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field appearance="outline" [formGroup]="jobForm">
+                        <mat-label>Select Status</mat-label>
+                        <mat-select formControlName="jobStatus" [(ngModel)]=" jobModel.jobStatus"
+                            [ngClass]="{ 'is-invalid': submitted && f.jobStatus.errors }" required>
+                            <mat-option>Select Status</mat-option>
+                            <mat-option value="Active">Active</mat-option>
+                            <mat-option value="Inactive">Inactive</mat-option>
+                        </mat-select>
+                        <div *ngIf="submitted && f.jobStatus.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.jobStatus.errors.required">Status is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center m-4">
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </mat-card>
+    </form>
+
+    <mat-card class="m-3">
+        <h4 class="bg-success text-white text-center p-1">HISTORY</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Area Name" #input>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="table-responsive" #epltable>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="Sr.No.">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr.No. </th>
+                    <td mat-cell *matCellDef="let element; index as i;"> {{paginator.pageSize * paginator.pageIndex + i
+                        + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vendor">
+                    <th mat-header-cell *matHeaderCellDef> Vendor Name </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.vendorBusinessName}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="jobName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Job Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.jobName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="noOfPositions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>No. Of Positions</th>
+                    <td mat-cell *matCellDef="let element"> {{element.noOfPositions}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.jobStatus}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td mat-cell *matCellDef="let element"> <button type="button" class="btn btn-dark"
+                            title="Edit Job" (click)="getJobById(element.jobId)">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </button>
+                    
+                        <button type="button" class="btn btn-dark" style="margin-left: 10px"
+                        title="Delete Job" (click)="deleteJobById(element.jobId)">
+                        <i class="fa fa-trash-o"></i>
+                    </button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div class="row" *ngIf="errormsgDiv">
+                <div class="col-md-12 text-center">
+                    <p>Record not found</p>
+                </div>
+            </div>
+
+            <br>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons class="stylespagination">
+            </mat-paginator>
+        </div>
+
+    </mat-card>
+</section>

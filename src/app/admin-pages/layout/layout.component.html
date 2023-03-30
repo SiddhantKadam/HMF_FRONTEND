@@ -1,0 +1,100 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+
+    <mat-toolbar class="example-toolbar">
+        <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h1 class="example-app-name">HMF</h1>
+        <button class="navbar-menu" mat-button [matMenuTriggerFor]="beforeMenu">
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+            fixedTopGap="56">
+            <mat-nav-list class="pl-3">
+                <mat-list-item routerLink="/admin-pages/layout/dashboard" style="padding-left: 8px">
+                    <mat-icon>dashboard</mat-icon> &nbsp;Dashboard
+                </mat-list-item>
+            </mat-nav-list>
+
+            <mat-nav-list class="pl-3">
+                <mat-list-item routerLink="/admin-pages/layout/masters/user-list" style="padding-left: 8px">
+                    <mat-icon>people</mat-icon> &nbsp;User List
+                </mat-list-item>
+            </mat-nav-list>
+
+            <!-- <mat-nav-list class="pl-3">
+                <mat-list-item routerLink="/admin-pages/layout/masters/subscription-plan-master" style="padding-left: 8px">
+                    <mat-icon>assignment_ind</mat-icon> &nbsp;Subscription Plan
+                </mat-list-item>
+            </mat-nav-list> -->
+
+            <mat-nav-list class="pl-3">
+                <mat-list-item routerLink="/admin-pages/layout/masters/vendor-list" style="padding-left: 8px">
+                    <mat-icon>assignment_ind</mat-icon> &nbsp;Vendor List
+                </mat-list-item>
+            </mat-nav-list>
+
+            <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+                <mat-expansion-panel-header>
+                    <mat-icon>folder</mat-icon> &nbsp;Masters
+                </mat-expansion-panel-header>
+                <mat-nav-list dense>
+                    <a mat-list-item routerLink="/admin-pages/layout/masters/banner-master">
+                        <mat-icon>add_photo_alternate</mat-icon>&nbsp;Banner Master
+                    </a>
+                    <a mat-list-item routerLink="/admin-pages/layout/masters/category-master">
+                        <mat-icon>category</mat-icon>&nbsp;Category Master
+                    </a>
+                    <a mat-list-item routerLink="/admin-pages/layout/masters/subscription-plan-master">
+                        <mat-icon>assignment_ind</mat-icon>&nbsp;Subscription Master
+                    </a>
+                    <a mat-list-item routerLink="/admin-pages/layout/masters/job-master">
+                        <mat-icon>assignment_ind</mat-icon>&nbsp;Job Master
+                    </a>
+                    <!-- 
+                    <a mat-list-item routerLink="/admin-pages/layout/masters/vendor-list">
+                        <mat-icon>people</mat-icon>Vendor List
+                    </a> -->
+                </mat-nav-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+                <mat-expansion-panel-header>
+                    <mat-icon>assessment</mat-icon> &nbsp;Reports
+                </mat-expansion-panel-header>
+                <mat-nav-list dense>
+                    <a mat-list-item routerLink="/admin-pages/layout/reports/user-report" (click)="reportSession('user')">
+                        <mat-icon>assessment</mat-icon>&nbsp;User Report
+                    </a>
+                    <a mat-list-item routerLink="/admin-pages/layout/reports/user-report" (click)="reportSession('vendor')">
+                        <mat-icon>assessment</mat-icon>&nbsp;Vendor Report
+                    </a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+
+        <mat-nav-list class="pl-3">
+            <mat-list-item routerLink="/admin-pages/layout/masters/admin-settings" style="padding-left: 8px">
+                <mat-icon>settings</mat-icon> &nbsp;Admin Settings
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+        
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+</div>
+
+
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->

@@ -1,0 +1,295 @@
+<section>
+    <ngx-spinner></ngx-spinner>
+    <mat-card class="m-3">
+        <h3 class="bg-success text-white text-center p-2">VENDOR LIST</h3>
+    </mat-card>
+
+    <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
+        <mat-card class="m-3">
+            <h5>
+                <mat-icon style="vertical-align: bottom"> check_circle </mat-icon> Personal Details
+            </h5>
+            <hr>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">First Name</mat-label>
+                        <input matInput placeholder="Enter First Name" formControlName="vendorFName"
+                            [(ngModel)]=" vendorModel.vendorFName"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorFName.errors }">
+                        <div *ngIf="submitted && f.vendorFName.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorFName.errors.required">Vendor First Name is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Last Name</mat-label>
+                        <input matInput placeholder="Enter Last Name" formControlName="vendorLName"
+                            [(ngModel)]=" vendorModel.vendorLName"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorLName.errors }">
+                        <div *ngIf="submitted && f.vendorLName.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorLName.errors.required">Vendor Last Name is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Mobile Number</mat-label>
+                        <input matInput placeholder="Enter Mobile Number" formControlName="vendorMobileNo"
+                            [(ngModel)]=" vendorModel.vendorMobileNo"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorMobileNo.errors }">
+                        <div *ngIf="submitted && f.vendorMobileNo.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorMobileNo.errors.required">Vendor Mobile Number is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Reference Number</mat-label>
+                        <input matInput placeholder="Enter Reference Number" formControlName="vendorReferenceMobileNo"
+                            [(ngModel)]=" vendorModel.vendorReferenceMobileNo"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorReferenceMobileNo.errors }">
+                        <div *ngIf="submitted && f.vendorReferenceMobileNo.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorReferenceMobileNo.errors.required">Reference Number
+                                is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field appearance="outline" [formGroup]="vendorForm">
+                        <mat-label>Select Status</mat-label>
+                        <mat-select required formControlName="vendorStatus" [(ngModel)]=" vendorModel.vendorStatus"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorStatus.errors }">
+                            <mat-option>Select Status</mat-option>
+                            <mat-option value="Active">Active</mat-option>
+                            <mat-option value="Inactive">Inactive</mat-option>
+                        </mat-select>
+                        <div *ngIf="submitted && f.vendorStatus.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorStatus.errors.required">Status is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <h5>
+                <mat-icon style="vertical-align: bottom"> check_circle </mat-icon> Business Details
+            </h5>
+            <hr>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Business Name</mat-label>
+                        <input matInput placeholder="Enter Business Name" formControlName="vendorBusinessName"
+                            [(ngModel)]=" vendorModel.vendorBusinessName"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorBusinessName.errors }">
+                        <div *ngIf="submitted && f.vendorBusinessName.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorBusinessName.errors.required">Business Name is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Business Category</mat-label>
+                        <mat-select required formControlName="categoryId" [(ngModel)]=" vendorModel.categoryId"
+                            [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
+                            <mat-option>Select Category</mat-option>
+                            <mat-option *ngFor="let category of getActiveCategoryList" [value]="category.categoryId">
+                                {{category.categoryName}}
+                            </mat-option>
+                        </mat-select>
+                        <div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.categoryId.errors.required">Category is required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Business Mobile Number</mat-label>
+                        <input matInput placeholder="Enter Business Mobile Number"
+                            formControlName="vendorBusinessMobileNo" [(ngModel)]=" vendorModel.vendorBusinessMobileNo"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorBusinessMobileNo.errors }">
+                        <div *ngIf="submitted && f.vendorBusinessMobileNo.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorBusinessMobileNo.errors.required">Business Mobile
+                                Number is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Vendor Holiday</mat-label>
+                        <input matInput placeholder="Enter Holiday" formControlName="vendorHoliday"
+                            [(ngModel)]=" vendorModel.vendorHoliday"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorHoliday.errors }">
+                        <div *ngIf="submitted && f.vendorHoliday.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorHoliday.errors.required">Holiday is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Vendor Description</mat-label>
+                        <textarea matInput placeholder="Enter Description" formControlName="vendorDescription"
+                            [(ngModel)]=" vendorModel.vendorDescription"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorDescription.errors }"></textarea>
+                        <div *ngIf="submitted && f.vendorDescription.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorDescription.errors.required">Description is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <mat-form-field class="example-full-width " appearance="outline" [formGroup]="vendorForm">
+                        <mat-label class="">Business Address</mat-label>
+                        <textarea matInput placeholder="Enter Business Address" formControlName="vendorBusinessAddress"
+                            [(ngModel)]=" vendorModel.vendorBusinessAddress"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorBusinessAddress.errors }"></textarea>
+                        <div *ngIf="submitted && f.vendorBusinessAddress.errors" class="invalid-feedback">
+                            <div class="text-danger" *ngIf="f.vendorBusinessAddress.errors.required">Business Address is
+                                required
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12 col-12 text-center p-2">
+                    <p class="m-0" style="text-align: left">Business Proof</p>
+                    <div class="border p-2">
+                        <img [src]="vendorModel.vendorBusinessProof" class="img-fluid" style="height: 150px">
+                        <mat-icon class="mt-1 text-danger" style="float: right; cursor: pointer" title="Delete image"
+                            (click)="deleteBusinessProof()"> highlight_off </mat-icon>
+                        <input type="file" formControlName="vendorBusinessProof" #files
+                            (change)="handleFileInput($event.target)"
+                            [ngClass]="{ 'is-invalid': submitted && f.vendorBusinessProof.errors }">
+                        <div *ngIf="submitted && f.vendorBusinessProof.errors">
+                            <div class="text-danger" *ngIf="f.vendorBusinessProof.errors.required">Business Proof is
+                                required</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h5>
+                <mat-icon style="vertical-align: bottom"> check_circle </mat-icon> Business Images
+            </h5>
+            <hr>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12 col-12 text-center p-2"
+                    *ngFor="let image of getVendorImagesList">
+                    <div class="border p-2">
+                        <img [src]="image.vendorImagePath" class="img-fluid" style="height: 150px">
+                        <mat-icon class="mt-1 text-danger" style="float: right; cursor: pointer" title="Delete image"
+                            (click)="deleteImage(image.vendorImageId, vendorModel.vendorId)"> highlight_off </mat-icon>
+                        <input type="file" #files (change)="handleFileInputforImages($event.target, image)">
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success mt-3" title="Add Image" (click)="plusImage()">
+                Add image <mat-icon style="vertical-align: bottom"> add </mat-icon>
+            </button>
+            <div class="col-md-12 text-center m-4">
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </mat-card>
+    </form>
+
+    <mat-card class="m-3">
+        <h4 class="bg-success text-white text-center p-1">HISTORY</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search here" #input>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="table-responsive" #epltable>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="Sr.No.">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr.No. </th>
+                    <td mat-cell *matCellDef="let element; index as i;"> {{paginator.pageSize * paginator.pageIndex + i
+                        + 1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FName">
+                    <th mat-header-cell *matHeaderCellDef> First Name </th>
+                    <td mat-cell *matCellDef="let element">{{element.vendorFName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Mobile">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
+                    <td mat-cell *matCellDef="let element"> {{element.vendorMobileNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                    <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Business Name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Business Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.vendorBusinessName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                    <td mat-cell *matCellDef="let element"> {{element.vendorStatus}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td mat-cell *matCellDef="let element"> <button type="button" class="btn btn-dark"
+                            title="Edit Category Master" (click)="getVendorById(element.vendorId)">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div class="row" *ngIf="errormsgDiv">
+                <div class="col-md-12 text-center">
+                    <p>Record not found</p>
+                </div>
+            </div>
+
+            <br>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons class="stylespagination">
+            </mat-paginator>
+        </div>
+
+    </mat-card>
+</section>
